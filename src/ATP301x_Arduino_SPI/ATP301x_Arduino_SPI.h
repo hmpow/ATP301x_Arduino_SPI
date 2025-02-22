@@ -1,7 +1,11 @@
-#ifndef ATP301X_SPI_H
-#define ATP301X_SPI_H
+#ifndef ATP301X_ARDUINO_SPI_H
+#define ATP301X_ARDUINO_SPI_H
 
-#include "mbed.h"
+//#include "mbed.h"
+#include <Arduino.h>
+#include <SPI.h>
+
+//https://docs.arduino.cc/language-reference/en/functions/communication/SPI/
 
 /** 動作パラメータ設定
 * ※カッコ内はデータシートに記載された限度値です。
@@ -19,31 +23,21 @@
 //SPI送信周期 (>= 20μs)
 #define SPI_SEND_PERIOD_US 25
 
-#include "mbed.h"
+//SPI通信モード (SPI_MODE0 or SPI_MODE3) 
+#define SPI_MODE_SELECT SPI_MODE0
 
+//SS端子は手動操作が必要？
+#define nSS_PIN 10
 
-/** ATP301x_SPI class.
-*  I wrote all documentation and comment in Japanese language only.
-*　(本ライブラリのドキュメントとコメントは日本語でのみ記載しております。)
-*  
-*  ATP301x series speech processor can only speak Japanese, so I thought this library will be used only in Japan.
-*  (ATP301x シリーズの音声合成LSIは日本語専用であり、本ライブラリは日本でのみ使用されることが想定されるためです。)
-*  
-*  AquesTalk pico 日本語音声合成LSI ATP3011/ATP3012 をSPI通信で使用するためのライブラリです。
-*  
-*  SPI通信モードは内部で3に固定しています。
-*  
-*  動作パラメータはATP301x_SPI.hのマクロで定義しています。必要に応じ変更してご使用ください。
-*/
-class ATP301x_SPI{
+//SPI仕様端子
+// T.B.D. 一旦D10～D13固定
+
+class ATP301x_ARDUINO_SPI{
 public:
     /** 
-     * @param mosi SPI mosiピン
-     * @param miso SPI misoピン
-     * @param sck SPI sckピン
-     * @param ss SPI ssピン(DigitalOutを使用)
+     * @brief ATP301x_SPIクラスのSPI通信を初期化します。
      */
-    ATP301x_SPI(PinName mosi, PinName miso, PinName sck, PinName ss);
+    void begin();
     
     /**
      * @brief breakコマンドを送信し発話中断します。ATP301xが次のコマンドを受け付けられる状態になる(Readyになる)までwait()します。
@@ -75,9 +69,9 @@ public:
     void chimeK(bool useWait = true);
 
 private:
-    SPI _spi; // mosi, miso, sck
-    DigitalOut _ss;
     void atp_initialize();
     void atp_wait();
+    void ss_active();
+    void ss_inactive();
 };
-#endif
+#endif //ATP301X_ARDUINO_SPI_H

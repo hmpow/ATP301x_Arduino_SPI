@@ -1,18 +1,34 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+#include "Atp301x_Arduino_SPI.h"
+
+
+ATP301x_ARDUINO_SPI atp301x;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  atp301x.begin();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  
+  atp301x.chimeK(true);
+  delay(1000);
+
+  atp301x.talk("te'_suto.", true);
+  delay(1000);
+
+  atp301x.chimeJ(true);
+  delay(1000);
+
+  atp301x.talk("chu-dannte'_suto tomaranai+hazu.", true);
+  delay(500);
+  atp301x.stop();
+  delay(1000);
+
+  atp301x.talk("chu-dannte'_suto tomaru+hazu.", false);
+  delay(500);
+  atp301x.stop();
+  delay(1000);
+
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
