@@ -30,5 +30,10 @@ void loop() {
   atp301x.stop();
   delay(1000);
 
+  atp301x.talk("nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse- nagasugi'ru/o'nnse-.", false);
+  delay(500);
+  atp301x.stop();
+  delay(1000);
+
 }
 
